@@ -1,0 +1,74 @@
+﻿
+@using Google.Apis.Calendar.v3.Data
+
+@model Events
+
+@{
+    ViewBag.Title = "Google Calendar Pull App";
+    int i = 1;
+}
+
+<div class="jumbotron">
+    <h1>Google Calendar Pull Application</h1>
+    <p class="lead">Google Calendar Pull Application that can be used for getting events to your application and you have to provide on client id and secret key.</p>
+    <p><a target="_blank" href="https://developers.google.com/calendar/quickstart/dotnet" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+</div>
+
+@if (Model.Items.Any())
+{
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">Your Upcomming Events</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-bordered table-hover table-responsive table-striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Serial No.
+                                    </th>
+                                    <th>
+                                        Event Name
+                                    </th>
+                                    <th>
+                                        Event Date
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Items)
+                                {
+                                    string when = item.Start.DateTime.ToString();
+                                    if (String.IsNullOrEmpty(when))
+                                    {
+                                        when = item.Start.Date;
+                                    }
+
+
+                                <tr>
+                                    <td>@i</td>
+                                    <td>@item.Summary</td>
+                                    <td>
+                                        @when
+                                    </td>
+                                </tr>
+                                    i++;
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+}
+else
+{
+    <div class="alert alert-warning">
+        <strong>Warning!</strong> Your do not have any upcomming google calendar events yet. Please add event(s) first.
+    </div>
+}
